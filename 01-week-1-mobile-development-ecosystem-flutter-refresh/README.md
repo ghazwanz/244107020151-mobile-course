@@ -1,9 +1,9 @@
-# Laporan Tugas Mingguan: Minggu 01 - Mobile Development Ecosystem & Flutter Refresh
+# Laporan Jobsheet Mingguan: Week 01 - Mobile Development Ecosystem & Flutter Refresh
 
 - **Nama Mahasiswa**: Ghazwan Ababil
 - **NIM**: 244107020151
 - **Repositori**: [244107020151-mobile-course](https://github.com/ghazwanz/244107020151-mobile-course)
-- **Status Tugas**: ✅ _Selesai_
+- **Status**: ✅ _Selesai_
 
 ---
 
