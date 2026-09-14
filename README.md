@@ -29,7 +29,7 @@ Pengembangan aplikasi mobile pada portofolio ini memanfaatkan ekosistem resmi:
 | Minggu | Topik Pembelajaran                             | Folder Tugas & Laporan                                                                                              | Status |
 | :----: | :--------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ | :----: |
 | **01** | Mobile Development Ecosystem & Flutter Refresh | [01-week-1-mobile-development-ecosystem-flutter-refresh](./01-week-1-mobile-development-ecosystem-flutter-refresh/) |   ✅   |
-| **02** | Declarative UI & Responsive Design             | [02-week-2-declarative-ui-responsive-design](./02-week-2-declarative-ui-responsive-design/)                         |        |
+| **02** | Declarative UI & Responsive Design             | [02-week-2-declarative-ui-responsive-design](./02-week-2-declarative-ui-responsive-design/)                         | 🔄 In Progress |
 | **03** | Navigation & State Management                  | [03-week-3-navigation-state-management](./03-week-3-navigation-state-management/)                                     |        |
 | **04** | Networking & REST API Integration              | [04-week-4-networking-rest-api](./04-week-4-networking-rest-api/)                                                     |        |
 | **05** | Local Storage & Offline-First Architecture     | [05-week-5-local-storage-offline-first](./05-week-5-local-storage-offline-first/)                                     |        |
