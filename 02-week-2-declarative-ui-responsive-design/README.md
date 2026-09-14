@@ -127,3 +127,225 @@ class ProfileCard extends StatelessWidget {
    - Selain itu, membungkus nilai email dengan `Flexible` dan `overflow: TextOverflow.ellipsis` mencegah teks panjang meluap (_overflow_) melewati batas lebar kontainer kartu.
 
    ![Eksperimen 3: Penambahan Baris Email](./screenshots/04-eksperimen-email.png)
+
+---
+
+## 3. Praktikum: Dashboard Responsif
+
+Praktikum ini membuat antarmuka dashboard responsif menggunakan widget `LayoutBuilder`, `GridView.count`, dan kartu metrik `DashboardCard`.
+
+### 1. Implementasi Awal: StatelessWidget & LayoutBuilder
+
+Pada tahap awal, `DashboardApp` dibangun sebagai `StatelessWidget`. Widget `LayoutBuilder` digunakan untuk membaca batasan lebar layar (`constraints.maxWidth`). Jika lebar layar mencapai atau melebihi 700 piksel (`maxWidth >= 700`), grid menampilkan 2 kolom; jika kurang dari 700 piksel, grid beralih otomatis menjadi 1 kolom.
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() => runApp(const DashboardApp());
+
+class DashboardApp extends StatelessWidget {
+  const DashboardApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.indigo),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.indigo,
+      ),
+      themeMode: ThemeMode.system,
+      home: const DashboardPage(),
+    );
+  }
+}
+
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Student Dashboard')),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final columns = constraints.maxWidth >= 700 ? 2 : 1;
+          return GridView.count(
+            padding: const EdgeInsets.all(16),
+            crossAxisCount: columns,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 2.6,
+            children: const [
+              DashboardCard(title: 'Assignments', value: '8'),
+              DashboardCard(title: 'Attendance', value: '92%'),
+              DashboardCard(title: 'Portfolio', value: 'Ready'),
+              DashboardCard(title: 'Current week', value: '02'),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DashboardCard extends StatelessWidget {
+  const DashboardCard({required this.title, required this.value, super.key});
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Expanded(child: Text(title)),
+            Text(value, style: Theme.of(context).textTheme.headlineSmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+### 2. Menambahkan Interaksi: StatefulWidget dan Cupertino
+
+Aplikasi ditingkatkan menjadi `StatefulWidget` untuk menambahkan fitur interaktif pergantian tema terang dan gelap secara manual melalui komponen `CupertinoSwitch` pada `AppBar`.
+
+```dart
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(const DashboardApp());
+
+class DashboardApp extends StatefulWidget {
+  const DashboardApp({super.key});
+
+  @override
+  State<DashboardApp> createState() => _DashboardAppState();
+}
+
+class _DashboardAppState extends State<DashboardApp> {
+  bool isDark = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.indigo),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.indigo,
+      ),
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      home: DashboardPage(
+        isDark: isDark,
+        onDarkChanged: (value) => setState(() => isDark = value),
+      ),
+    );
+  }
+}
+
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({
+    required this.isDark,
+    required this.onDarkChanged,
+    super.key,
+  });
+  final bool isDark;
+  final ValueChanged<bool> onDarkChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Student Dashboard'),
+        actions: [
+          Row(
+            children: [
+              Icon(isDark ? Icons.dark_mode : Icons.light_mode),
+              const SizedBox(width: 4),
+              CupertinoSwitch(
+                value: isDark,
+                onChanged: onDarkChanged,
+              ),
+              const SizedBox(width: 12),
+            ],
+          ),
+        ],
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final columns = constraints.maxWidth >= 700 ? 2 : 1;
+          return GridView.count(
+            padding: const EdgeInsets.all(16),
+            crossAxisCount: columns,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 2.6,
+            children: const [
+              DashboardCard(title: 'Assignments', value: '8'),
+              DashboardCard(title: 'Attendance', value: '92%'),
+              DashboardCard(title: 'Portfolio', value: 'Ready'),
+              DashboardCard(title: 'Current week', value: '02'),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DashboardCard extends StatelessWidget {
+  const DashboardCard({required this.title, required this.value, super.key});
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Expanded(child: Text(title)),
+            Text(value, style: Theme.of(context).textTheme.headlineSmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+### Hasil Eksperimen Layout & Interaksi
+
+1. **Eksperimen 1: Perubahan Breakpoint Layar**
+   - Nilai breakpoint `constraints.maxWidth >= 700` menentukan responsivitas tampilan: layar sempit (kurang dari 700) akan menampilkan 1 kolom, sedangkan layar lebar (lebih dari 700) akan menampilkan 2 kolom.
+   - Mengubah nilai breakpoint ini menggeser batas kapan layout grid bertransisi secara dinamis.
+
+   ![Dashboard Responsif 1 Kolom](./screenshots/05-dashboard-1-kolom.png)
+   ![Dashboard Responsif 2 Kolom](./screenshots/06-dashboard-2-kolom.png)
+
+2. **Eksperimen 2: Perubahan ThemeMode & Penggunaan CupertinoSwitch**
+   - Komponen `CupertinoSwitch` dari package Cupertino terdapat toggle dengan style iOS.
+   - Perubahan state `isDark` mengubah properti `themeMode` secara state antara `ThemeMode.dark` dan `ThemeMode.light`.
+
+   ![Dashboard Mode Terang](./screenshots/07-dashboard-light-mode.png)
+   ![Dashboard Mode Gelap](./screenshots/08-dashboard-dark-mode.png)
+
+3. **Eksperimen 3: Pengujian Ukuran Layar Berbeda**
+   - Saat dijalankan pada emulator dengan orientasi atau resolusi yang berbeda, `LayoutBuilder` membaca batasan ruang secara langsung dan menyesuaikan layout kartu dashboard berdasarkan screen.
+
+4. **Eksperimen 4: Aksesibilitas Elemen UI**
+   - Elemen interaktif seperti toggle dark & light mode pada dashboard dapat dilengkapi label agar mudah dikenali oleh fitur aksesibilitas.
