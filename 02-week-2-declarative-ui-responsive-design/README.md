@@ -3,7 +3,7 @@
 - **Nama Mahasiswa**: Ghazwan Ababil
 - **NIM**: 244107020151
 - **Repositori**: [244107020151-mobile-course](https://github.com/ghazwanz/244107020151-mobile-course)
-- **Status Tugas**: 🔄 _In Progress (Sedang Berjalan)_
+- **Status Tugas**: ✅ _Selesai_
 
 ---
 
@@ -666,12 +666,22 @@ Hasil eksekusi `flutter test`:
 
 ## 6. Refleksi Pembelajaran (Reflections)
 
-1. **Pemahaman Deklaratif vs Imperatif**:
-   - Pada Flutter, UI dirancang secara deklaratif: tampilan adalah cerminan langsung dari _state_ saat ini ($UI = f(state)$). Kita tidak mengubah elemen antarmuka satu per satu secara manual, melainkan mendeklarasikan struktur tampilan dan membiarkan Flutter merekonstruksi subtree yang berubah secara otomatis saat `setState()` dipanggil.
-2. **Kekuatan LayoutBuilder**:
-   - `LayoutBuilder` membaca batasan ukuran kontainer lokal (_box constraints_), bukan ukuran layar penuh. Ini membuat widget dashboard sangat fleksibel dan dapat digunakan kembali di berbagai ukuran layar maupun orientasi tanpa terikat ukuran jendela global.
-3. **Pemisahan Perhatian (Separation of Concerns)**:
-   - Memisahkan logika state tema di `DashboardApp` (StatefulWidget) dan tampilan antarmuka di `DashboardPage` (StatelessWidget) membuat kode lebih rapi, modular, dan mudah diuji.
+1. **Perbedaan Cara Berpikir Imperative dan Declarative saat Membangun UI**:
+   - **Imperatif**: Pengembang mengatur langkah-demi-langkah perubahan tampilan secara manual (misal mengambil ID elemen lalu mengubah teks atau warnanya satu per satu saat ada event).
+   - **Deklaratif**: Pada Flutter, UI dirancang sebagai fungsi langsung dari state ($UI = f(state)$). Pengembang mendeskripsikan bagaimana antarmuka terlihat pada kondisi state tertentu, dan Flutter merekonstruksi subtree tampilan secara otomatis saat `setState()` dipanggil.
+
+2. **Kapan Expanded Membantu dan Kapan Menghasilkan Layout Error**:
+   - **Membantu**: Saat diletakkan di dalam `Row` atau `Column` untuk membagi sisa ruang secara proporsional dan mencegah teks atau konten meluap (*render overflow*) melewati batas layar.
+   - **Menghasilkan Error**: Ketika dipasang di luar parent flex (`Row`, `Column`, `Flex`) atau di dalam kontainer yang tidak memiliki batasan ukuran pasti (*unbounded constraints*), memicu error *ParentDataWidget* atau *RenderFlex unbounded height/width*.
+
+3. **Pengaruh Breakpoint dan Theme terhadap Pengalaman Pengguna (UX)**:
+   - **Breakpoint**: Menjamin tata letak tetap nyaman dibaca di berbagai ukuran layar dengan beralih adaptif antara 1 kolom pada layar ponsel sempit dan 2 kolom pada layar lebar/tablet.
+   - **Theme**: Meningkatkan kenyamanan visual pengguna di lingkungan terang maupun redup (mode terang/gelap), menjaga kontras warna antarmuka tetap terbaca, dan ramah aksesibilitas.
+
+4. **Hal yang Diverifikasi dari Rekomendasi AI setelah Tugas Inti Selesai**:
+   - Memastikan widget yang disarankan merupakan komponen resmi dari kanal stabil Flutter SDK tanpa dependensi luar yang tidak diinstruksikan.
+   - Memverifikasi adaptabilitas tata letak pada dimensi layar sempit (di bawah 600px) agar bebas dari error overflow.
+   - Memastikan rekomendasi AI tetap mematuhi standar aksesibilitas (`Semantics`) dan lulus seluruh pengujian otomatis (`flutter test`).
 
 ---
 
