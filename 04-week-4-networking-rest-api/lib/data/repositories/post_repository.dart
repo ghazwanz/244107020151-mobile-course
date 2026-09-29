@@ -28,4 +28,11 @@ class PostRepository {
         .map(Post.fromJson)
         .toList();
   }
+
+  /// Mengambil data post tunggal berdasarkan ID untuk halaman detail.
+  Future<Post> fetchPostById(int id) async {
+    final response = await _dio.get<Map<String, dynamic>>('/posts/$id');
+    final data = response.data ?? {};
+    return Post.fromJson(data);
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'data/models/post.dart';
 import 'pages/paged_post_page.dart';
+import 'pages/post_detail_page.dart';
 import 'pages/post_list_page.dart';
 
 void main() => runApp(const ProviderScope(child: MyApp()));
@@ -54,6 +56,18 @@ final _router = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/post/:id',
+      builder: (context, state) {
+        final idString = state.pathParameters['id'] ?? '0';
+        final postId = int.tryParse(idString) ?? 0;
+        final post = state.extra as Post?;
+        return PostDetailPage(
+          postId: postId,
+          initialPost: post,
+        );
+      },
     ),
   ],
 );

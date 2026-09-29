@@ -5,6 +5,8 @@ import 'api_client.dart';
 import 'models/post.dart';
 import 'repositories/post_repository.dart';
 
+export 'network_errors.dart';
+
 final dioProvider = Provider<Dio>((ref) => createDio());
 
 final postRepositoryProvider = Provider<PostRepository>(
@@ -37,6 +39,12 @@ final postListProvider =
   retry: (retryCount, error) => null,
 );
 
+/// Provider untuk memuat post tunggal berdasarkan ID bila dibuka langsung via deep link.
+final singlePostProvider = FutureProvider.family<Post, int>((ref, id) {
+  final repository = ref.watch(postRepositoryProvider);
+  return repository.fetchPostById(id);
+});
+
 /// Helper khusus testing: membaca state pertama yang bukan loading lewat listener + completer.
 Future<List<Post>> readPostsOnce(ProviderContainer container) {
   final completer = Completer<List<Post>>();
@@ -68,27 +76,4 @@ Future<Object?> readPostsErrorOnce(ProviderContainer container) {
     fireImmediately: true,
   );
   return completer.future.whenComplete(sub.close);
-}
-
-String friendlyErrorMessage(Object error) {
-  if (error is DioException) {
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return 'Koneksi lambat atau timeout. Periksa internet Anda lalu coba lagi.';
-      case DioExceptionType.connectionError:
-        return 'Tidak dapat terhubung ke server. Periksa internet Anda.';
-      case DioExceptionType.badResponse:
-        final code = error.response?.statusCode;
-        if (code == 404) return 'Data tidak ditemukan (404).';
-        if (code == 401 || code == 403) {
-          return 'Akses ditolak ($code). Periksa kredensial Anda.';
-        }
-        return 'Server bermasalah ($code). Coba lagi nanti.';
-      default:
-        return 'Terjadi kesalahan jaringan. Coba lagi.';
-    }
-  }
-  return 'Terjadi kesalahan tak terduga: $error';
 }
