@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../data/api_errors.dart';
 import '../providers/auth_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -36,7 +37,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         children: [
           const SizedBox(height: 8),
           Text(
-            'Autentikasi disimulasikan (mock JWT). Token disimpan di secure storage.',
+            'Masuk memakai Firebase Auth (email + kata sandi). ID token & refresh token disimpan di secure storage.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 24),
@@ -72,7 +73,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Text(
-                'Gagal masuk: ${auth.error}',
+                friendlyAuthError(auth.error!),
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),

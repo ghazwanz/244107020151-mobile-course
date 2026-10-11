@@ -29,6 +29,12 @@ class AuthNotifier extends AsyncNotifier<bool> {
   }
 
   Future<void> logout() async {
+    // Akhiri sesi di Firebase Auth, lalu bersihkan token lokal.
+    try {
+      await ref.read(authRepositoryProvider).logout();
+    } catch (_) {
+      // Diabaikan: yang terpenting token lokal dibersihkan.
+    }
     await ref.read(tokenStoreProvider).clear();
     ref.invalidateSelf();
   }
