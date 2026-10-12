@@ -223,26 +223,26 @@ Bukti (user uji `mahasiswa@polinema.ac.id`): login → Home (`16`), sesi bertaha
 
 ### Bukti Visual Implementasi (Screenshots)
 
-|                              Bukti Tampilan                              | Deskripsi Antarmuka                                                                                                       |
-| :----------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------ |
-|             ![Guard Login](./screenshots/01-login-guard.png)             | **Guard Route**: tanpa token, aplikasi otomatis diarahkan ke `/login`.                                                    |
-|       ![Home Setelah Login](./screenshots/02-home-after-login.png)       | **Login Berhasil**: setelah kredensial valid, token tersimpan di secure storage dan masuk ke `/`.                         |
-|        ![Deep Link](./screenshots/03-deep-link-announcement.png)         | **Deep Link `/pengumuman/3`**: rute tujuan notifikasi dibuka dengan benar.                                                |
-|         ![Token FCM Debug](./screenshots/04-fcm-token-debug.png)         | **Token FCM (debug)**: token ditampilkan terpotong (`dE0wJWTKR4e4...`) beserta topik `pengumuman-kampus`.                 |
-| ![Foreground Notification](./screenshots/05-foreground-notification.png) | **Foreground**: banner lokal tampil dari `onMessage` (tampil manual).                                                     |
-|    ![Foreground Deep Link](./screenshots/06-foreground-deeplink.png)     | **Foreground klik**: masuk ke `/pengumuman/3`.                                                                            |
-| ![Background Notification](./screenshots/07-background-notification.png) | **Background**: banner sistem muncul otomatis.                                                                            |
-|    ![Background Deep Link](./screenshots/08-background-deeplink.png)     | **Background klik**: aplikasi dibuka ke `/pengumuman/3`.                                                                  |
-| ![Terminated Notification](./screenshots/09-terminated-notification.png) | **Terminated**: notifikasi sistem tersedia saat aplikasi dimatikan.                                                       |
-|    ![Terminated Deep Link](./screenshots/10-terminated-deeplink.png)     | **Terminated klik**: cold start ke `/pengumuman/3` via `getInitialMessage`.                                               |
-| ![Token Setelah Clear Data](./screenshots/11-token-after-clear-data.png) | **Token lifecycle**: setelah clear data, token berubah menjadi `eB2MdOBRSKWc...` dan terkirim ulang ke backend.           |
-|       ![Unsubscribe Topik](./screenshots/12-topic-unsubscribe.png)       | **Unsubscribe topik**: switch nonaktif, perangkat tidak lagi menerima broadcast topik.                                    |
-|       ![Resubscribe Topik](./screenshots/13-topic-resubscribe.png)       | **Resubscribe topik**: switch aktif kembali, broadcast topik diterima lagi.                                               |
-| ![Channel Konsisten](./screenshots/14-background-channel-consistent.png) | **Konsistensi channel**: banner background memakai channel `pengumuman` yang sama dengan foreground.                      |
-|             ![Uji Kirim](./screenshots/fcm-console-test.png)             | **Uji kirim pertama** : banner sistem saat background dari payload `notification + data` via FCM HTTP v1.                 |
-|   ![Firebase Auth Sukses](./screenshots/16-firebase-auth-success.png)    | **Login Firebase Auth**: kredensial diverifikasi Firebase, masuk ke Home.                                                 |
-|   ![Firebase Auth Persist](./screenshots/15-firebase-auth-persist.png)   | **Persistensi sesi**: setelah force-stop, token di secure storage membuat app langsung ke Home (tidak perlu login ulang). |
-|             ![Logout](./screenshots/17-logout-to-login.png)              | **Logout**: `signOut()` Firebase + token lokal dibersihkan, kembali ke `/login`.                                          |
+|                                             Bukti Tampilan                                              | Deskripsi Antarmuka                                                                                                       |
+| :-----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------ |
+|                            ![Guard Login](./screenshots/01-login-guard.png)                             | **Guard Route**: tanpa token, aplikasi otomatis diarahkan ke `/login`.                                                    |
+|                      ![Home Setelah Login](./screenshots/02-home-after-login.png)                       | **Login Berhasil**: setelah kredensial valid, token tersimpan di secure storage dan masuk ke `/`.                         |
+|                        ![Deep Link](./screenshots/03-deep-link-announcement.png)                        | **Deep Link `/pengumuman/3`**: rute tujuan notifikasi dibuka dengan benar.                                                |
+|                        ![Token FCM Debug](./screenshots/04-fcm-token-debug.png)                         | **Token FCM (debug)**: token ditampilkan terpotong (`dE0wJWTKR4e4...`) beserta topik `pengumuman-kampus`.                 |
+|                ![Foreground Notification](./screenshots/05-foreground-notification.png)                 | **Foreground**: banner lokal tampil dari `onMessage` (tampil manual).                                                     |
+|                    ![Foreground Deep Link](./screenshots/06-foreground-deeplink.png)                    | **Foreground klik**: masuk ke `/pengumuman/3`.                                                                            |
+|                ![Background Notification](./screenshots/07-background-notification.png)                 | **Background**: banner sistem muncul otomatis.                                                                            |
+|                    ![Background Deep Link](./screenshots/08-background-deeplink.png)                    | **Background klik**: aplikasi dibuka ke `/pengumuman/3`.                                                                  |
+|                ![Terminated Notification](./screenshots/09-terminated-notification.png)                 | **Terminated**: notifikasi sistem tersedia saat aplikasi dimatikan.                                                       |
+|                    ![Terminated Deep Link](./screenshots/10-terminated-deeplink.png)                    | **Terminated klik**: cold start ke `/pengumuman/3` via `getInitialMessage`.                                               |
+|                ![Token Setelah Clear Data](./screenshots/11-token-after-clear-data.png)                 | **Token lifecycle**: setelah clear data, token berubah menjadi `eB2MdOBRSKWc...` dan terkirim ulang ke backend.           |
+|                      ![Unsubscribe Topik](./screenshots/12-topic-unsubscribe.png)                       | **Unsubscribe topik**: switch nonaktif, perangkat tidak lagi menerima broadcast topik.                                    |
+|                      ![Resubscribe Topik](./screenshots/13-topic-resubscribe.png)                       | **Resubscribe topik**: switch aktif kembali, broadcast topik diterima lagi.                                               |
+|                ![Channel Konsisten](./screenshots/14-background-channel-consistent.png)                 | **Konsistensi channel**: banner background memakai channel `pengumuman` yang sama dengan foreground.                      |
+| ![Uji Kirim FCM](./screenshots/fcm-console-test.png) ![Hasil Uji](./screenshots/fcm-console-result.png) | **Uji kirim pertama** : banner sistem saat background dari payload `notification + data` via FCM HTTP v1.                 |
+|                   ![Firebase Auth Sukses](./screenshots/16-firebase-auth-success.png)                   | **Login Firebase Auth**: kredensial diverifikasi Firebase, masuk ke Home.                                                 |
+|                  ![Firebase Auth Persist](./screenshots/15-firebase-auth-persist.png)                   | **Persistensi sesi**: setelah force-stop, token di secure storage membuat app langsung ke Home (tidak perlu login ulang). |
+|                             ![Logout](./screenshots/17-logout-to-login.png)                             | **Logout**: `signOut()` Firebase + token lokal dibersihkan, kembali ke `/login`.                                          |
 
 > Catatan: screenshot diambil langsung dari emulator Android (720×1280) dalam mode debug.
 
